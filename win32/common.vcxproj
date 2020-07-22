@@ -18,10 +18,12 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
-
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{0FC30A29-EE10-46C0-8122-C5FAE5A142BC}</ProjectGuid>
+  </PropertyGroup>
   <PropertyGroup>
     <!-- Assume Visual Studio 2013 / 12.0 as the default -->
-  <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">12.0</VisualStudioVersion>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">12.0</VisualStudioVersion>
   </PropertyGroup>
   <!-- Visual Studio 2013 (12.0) -->
   <PropertyGroup Condition="'$(VisualStudioVersion)' == '12.0'">
@@ -34,11 +36,11 @@
   <!-- Visual Studio 2017 (15.0) -->
   <PropertyGroup Condition="'$(VisualStudioVersion)' == '15.0'">
     <PlatformToolset>v141</PlatformToolset>
-  </PropertyGroup>  
+  </PropertyGroup>
   <!-- Visual Studio 2019 (16.0) -->
   <PropertyGroup Condition="'$(VisualStudioVersion)' == '16.0'">
     <PlatformToolset>v142</PlatformToolset>
-  </PropertyGroup>  
+  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)'=='Debug'" Label="Configuration">
     <UseDebugLibraries>true</UseDebugLibraries>
   </PropertyGroup>
@@ -49,10 +51,9 @@
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup>
-    <BuildOutputDir>$(SolutionDir)\outdir\$(PlatformToolSet)\$(Platform)\$(Configuration)\</BuildOutputDir>
-    <BuildIntDir>interim\$(PlatformToolSet)\$(Platform)\$(Configuration)\</BuildIntDir>
+    <BuildOutputDir>$(ProjectDir)\..\..\build\librdkafka\$(Platform)\$(Configuration)\</BuildOutputDir>
+    <BuildIntDir>interim\v140\$(Platform)\$(Configuration)\</BuildIntDir>
   </PropertyGroup>
-
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -60,25 +61,19 @@
   <ImportGroup Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
-
-
   <PropertyGroup Label="Configuration">
     <WholeProgramOptimization>true</WholeProgramOptimization>
   </PropertyGroup>
-
   <PropertyGroup>
     <OutDir>$(BuildOutputDir)</OutDir>
     <IntDir>$(BuildIntDir)</IntDir>
   </PropertyGroup>
-
   <PropertyGroup Condition="'$(Configuration)'=='Release'" Label="Configuration">
     <LinkIncremental>false</LinkIncremental>
     <UseDebugLibraries>false</UseDebugLibraries>
   </PropertyGroup>
-
   <PropertyGroup Condition="'$(Configuration)'=='Debug'" Label="Configuration">
     <LinkIncremental>true</LinkIncremental>
     <UseDebugLibraries>true</UseDebugLibraries>
   </PropertyGroup>
-
 </Project>

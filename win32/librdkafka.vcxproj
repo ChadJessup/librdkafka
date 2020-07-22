@@ -4,20 +4,20 @@
     <ProjectGuid>{4BEBB59C-477B-4F7A-8AE8-4228D0861E54}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>librdkafka</RootNamespace>
-    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <PropertyGroup Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
   </PropertyGroup>
-  <Import Project="$(SolutionDir)common.vcxproj" />
+  <Import Project="$(ProjectDir)common.vcxproj" />
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Platform)'=='Win32'">
     <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);C:\OpenSSL-Win32\include</IncludePath>
     <LibraryPath>$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86);C:\OpenSSL-Win32\lib\VC\static</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Platform)'=='x64'">
-    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);C:\OpenSSL-Win64\include</IncludePath>
-    <LibraryPath>$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);C:\OpenSSL-Win64\lib\VC\static</LibraryPath>
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);C:\OpenSSL-Win64\include;C:\Projects\Kafka.Streams.net\packages\zlib.v140.windesktop.msvcstl.dyn.rt-dyn.1.2.8.8\build\native\include</IncludePath>
+    <LibraryPath>$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);C:\OpenSSL-Win64\lib\VC\static;C:\Projects\Kafka.Streams.net\packages\zlib.v140.windesktop.msvcstl.dyn.rt-dyn.1.2.8.8\lib\native\v140\windesktop\msvcstl\dyn\rt-dyn\x64\Debug</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -50,7 +50,7 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies);libeay32MT.lib;ssleay32MT.lib</AdditionalDependencies>
+      <AdditionalDependencies>legacy_stdio_definitions.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies);libeay32MT.lib;ssleay32MT.lib</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -247,14 +247,14 @@
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
-    <Import Project="packages\zlib.$(PlatformToolset).windesktop.msvcstl.dyn.rt-dyn.1.2.8.8\build\native\zlib.$(PlatformToolset).windesktop.msvcstl.dyn.rt-dyn.targets" Condition="Exists('packages\zlib.$(PlatformToolset).windesktop.msvcstl.dyn.rt-dyn.1.2.8.8\build\native\zlib.$(PlatformToolset).windesktop.msvcstl.dyn.rt-dyn.targets')" />
-    <Import Project="packages\confluent.libzstd.redist.1.3.8-g9f9630f4-test1\build\native\confluent.libzstd.redist.targets" Condition="Exists('packages\confluent.libzstd.redist.1.3.8-g9f9630f4-test1\build\native\confluent.libzstd.redist.targets')" />
+    <Import Project="..\..\packages\zlib.v140.windesktop.msvcstl.dyn.rt-dyn.1.2.8.8\build\native\zlib.v140.windesktop.msvcstl.dyn.rt-dyn.targets" Condition="Exists('..\..\packages\zlib.v140.windesktop.msvcstl.dyn.rt-dyn.1.2.8.8\build\native\zlib.v140.windesktop.msvcstl.dyn.rt-dyn.targets')" />
+    <Import Project="..\..\packages\confluent.libzstd.redist.1.3.8-test8\build\native\confluent.libzstd.redist.targets" Condition="Exists('..\..\packages\confluent.libzstd.redist.1.3.8-test8\build\native\confluent.libzstd.redist.targets')" />
   </ImportGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
-    <Error Condition="!Exists('packages\zlib.$(PlatformToolset).windesktop.msvcstl.dyn.rt-dyn.1.2.8.8\build\native\zlib.$(PlatformToolset).windesktop.msvcstl.dyn.rt-dyn.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\zlib.$(PlatformToolset).windesktop.msvcstl.dyn.rt-dyn.1.2.8.8\build\native\zlib.$(PlatformToolset).windesktop.msvcstl.dyn.rt-dyn.targets'))" />
-    <Error Condition="!Exists('packages\confluent.libzstd.redist.1.3.8-g9f9630f4-test1\build\native\confluent.libzstd.redist.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\confluent.libzstd.redist.1.3.8-g9f9630f4-test1\build\native\confluent.libzstd.redist.targets'))" />
+    <Error Condition="!Exists('..\..\packages\zlib.v140.windesktop.msvcstl.dyn.rt-dyn.1.2.8.8\build\native\zlib.v140.windesktop.msvcstl.dyn.rt-dyn.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\zlib.v140.windesktop.msvcstl.dyn.rt-dyn.1.2.8.8\build\native\zlib.v140.windesktop.msvcstl.dyn.rt-dyn.targets'))" />
+    <Error Condition="!Exists('..\..\packages\confluent.libzstd.redist.1.3.8-test8\build\native\confluent.libzstd.redist.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\confluent.libzstd.redist.1.3.8-test8\build\native\confluent.libzstd.redist.targets'))" />
   </Target>
 </Project>
