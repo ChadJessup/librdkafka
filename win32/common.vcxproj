@@ -51,6 +51,7 @@
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup>
+    <BaseIntermediateOutputPath>$(SolutionDir)build\librdkafka\$(Platform)\$(Configuration)\</BaseIntermediateOutputPath>
     <BuildOutputDir>$(SolutionDir)build\librdkafka\$(Platform)\$(Configuration)\</BuildOutputDir>
     <BuildIntDir>$(SolutionDir)build\librdkafka\interim\v140\$(Platform)\$(Configuration)\</BuildIntDir>
   </PropertyGroup>
