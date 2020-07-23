@@ -3,24 +3,24 @@
  *
  * Copyright (c) 2012, Magnus Edenhill
  * All rights reserved.
- * 
+ *
  * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions are met: 
- * 
+ * modification, are permitted provided that the following conditions are met:
+ *
  * 1. Redistributions of source code must retain the above copyright notice,
- *    this list of conditions and the following disclaimer. 
+ *    this list of conditions and the following disclaimer.
  * 2. Redistributions in binary form must reproduce the above copyright notice,
  *    this list of conditions and the following disclaimer in the documentation
- *    and/or other materials provided with the distribution. 
- * 
+ *    and/or other materials provided with the distribution.
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
- * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE 
- * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE 
- * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE 
- * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR 
- * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF 
- * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS 
- * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN 
+ * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
+ * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+ * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+ * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+ * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
  * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
@@ -43,15 +43,15 @@
 #endif
 
 #define TIMESPEC_TO_TS(ts) \
-	(((rd_ts_t)(ts)->tv_sec * 1000000LLU) + ((ts)->tv_nsec / 1000))
+    (((rd_ts_t)(ts)->tv_sec * 1000000LLU) + ((ts)->tv_nsec / 1000))
 
 #define TS_TO_TIMESPEC(ts,tsx) do {			\
-	(ts)->tv_sec  = (tsx) / 1000000;		\
+    (ts)->tv_sec  = (tsx) / 1000000;		\
         (ts)->tv_nsec = ((tsx) % 1000000) * 1000;	\
-	if ((ts)->tv_nsec >= 1000000000LLU) {		\
-	   (ts)->tv_sec++;				\
-	   (ts)->tv_nsec -= 1000000000LLU;		\
-	}						\
+    if ((ts)->tv_nsec >= 1000000000LLU) {		\
+       (ts)->tv_sec++;				\
+       (ts)->tv_nsec -= 1000000000LLU;		\
+    }						\
        } while (0)
 
 #define TIMESPEC_CLEAR(ts) ((ts)->tv_sec = (ts)->tv_nsec = 0LLU)
@@ -80,10 +80,10 @@ BOOL rd_ut_QueryPerformanceCounter(_Out_ LARGE_INTEGER * lpPerformanceCount);
 static RD_INLINE rd_ts_t rd_clock (void) RD_UNUSED;
 static RD_INLINE rd_ts_t rd_clock (void) {
 #ifdef __APPLE__
-	/* No monotonic clock on Darwin */
-	struct timeval tv;
-	gettimeofday(&tv, NULL);
-	return ((rd_ts_t)tv.tv_sec * 1000000LLU) + (rd_ts_t)tv.tv_usec;
+    /* No monotonic clock on Darwin */
+    struct timeval tv;
+    gettimeofday(&tv, NULL);
+    return ((rd_ts_t)tv.tv_sec * 1000000LLU) + (rd_ts_t)tv.tv_usec;
 #elif defined(_WIN32)
         LARGE_INTEGER now;
         static RD_TLS double freq = 0.0;
@@ -97,10 +97,10 @@ static RD_INLINE rd_ts_t rd_clock (void) {
         rd_QueryPerformanceCounter(&now);
         return (rd_ts_t)((double)now.QuadPart / freq);
 #else
-	struct timespec ts;
-	clock_gettime(CLOCK_MONOTONIC, &ts);
-	return ((rd_ts_t)ts.tv_sec * 1000000LLU) + 
-		((rd_ts_t)ts.tv_nsec / 1000LLU);
+    struct timespec ts;
+    clock_gettime(CLOCK_MONOTONIC, &ts);
+    return ((rd_ts_t)ts.tv_sec * 1000000LLU) +
+        ((rd_ts_t)ts.tv_nsec / 1000LLU);
 #endif
 }
 
@@ -110,9 +110,9 @@ static RD_INLINE rd_ts_t rd_clock (void) {
  *          beginning of the epoch.
  */
 static RD_INLINE RD_UNUSED rd_ts_t rd_uclock (void) {
-	struct timeval tv;
-	rd_gettimeofday(&tv, NULL);
-	return ((rd_ts_t)tv.tv_sec * 1000000LLU) + (rd_ts_t)tv.tv_usec;
+    struct timeval tv;
+    rd_gettimeofday(&tv, NULL);
+    return ((rd_ts_t)tv.tv_sec * 1000000LLU) + (rd_ts_t)tv.tv_usec;
 }
 
 
@@ -122,16 +122,16 @@ static RD_INLINE RD_UNUSED rd_ts_t rd_uclock (void) {
  */
 static RD_INLINE const char *rd_ctime (const time_t *t) RD_UNUSED;
 static RD_INLINE const char *rd_ctime (const time_t *t) {
-	static RD_TLS char ret[27];
+    static RD_TLS char ret[27];
 
 #ifndef _WIN32
-	ctime_r(t, ret);
+    ctime_r(t, ret);
 #else
-	ctime_s(ret, sizeof(ret), t);
+    ctime_s(ret, sizeof(ret), t);
 #endif
-	ret[25] = '\0';
+    ret[25] = '\0';
 
-	return ret;
+    return ret;
 }
 
 
@@ -172,11 +172,11 @@ static RD_INLINE int rd_timeout_ms (rd_ts_t timeout_us) {
  *          to rd_timeout_adjust().
  */
 static RD_INLINE rd_ts_t rd_timeout_init (int timeout_ms) {
-	if (timeout_ms == RD_POLL_INFINITE ||
-	    timeout_ms == RD_POLL_NOWAIT)
-		return timeout_ms;
+    if (timeout_ms == RD_POLL_INFINITE ||
+        timeout_ms == RD_POLL_NOWAIT)
+        return timeout_ms;
 
-	return rd_clock() + (timeout_ms * 1000);
+    return rd_clock() + (timeout_ms * 1000);
 }
 
 
@@ -284,10 +284,10 @@ static RD_INLINE int rd_timeout_remains (rd_ts_t abs_timeout) {
  */
 static RD_INLINE int
 rd_timeout_remains_limit0 (int remains_ms, int limit_ms) {
-	if (remains_ms == RD_POLL_INFINITE || remains_ms > limit_ms)
-		return limit_ms;
-	else
-		return remains_ms;
+    if (remains_ms == RD_POLL_INFINITE || remains_ms > limit_ms)
+        return limit_ms;
+    else
+        return remains_ms;
 }
 
 /**
@@ -304,7 +304,7 @@ rd_timeout_remains_limit (rd_ts_t abs_timeout, int limit_ms) {
  *          has timed out / expired, else 0.
  */
 static RD_INLINE int rd_timeout_expired (int timeout_ms) {
-	return timeout_ms == RD_POLL_NOWAIT;
+    return timeout_ms == RD_POLL_NOWAIT;
 }
 
 #endif /* _RDTIME_H_ */

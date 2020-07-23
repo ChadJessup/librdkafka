@@ -1,3 +1,4 @@
+win32/packages
 config.h
 config.log*
 config.cache

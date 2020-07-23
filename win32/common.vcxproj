@@ -51,8 +51,8 @@
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup>
-    <BuildOutputDir>$(ProjectDir)\..\..\build\librdkafka\$(Platform)\$(Configuration)\</BuildOutputDir>
-    <BuildIntDir>interim\v140\$(Platform)\$(Configuration)\</BuildIntDir>
+    <BuildOutputDir>$(SolutionDir)build\librdkafka\$(Platform)\$(Configuration)\</BuildOutputDir>
+    <BuildIntDir>$(SolutionDir)build\librdkafka\interim\v140\$(Platform)\$(Configuration)\</BuildIntDir>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
