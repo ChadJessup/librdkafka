@@ -2429,6 +2429,21 @@ rd_kafka_topic_conf_set_partitioner_cb (rd_kafka_topic_conf_t *topic_conf,
 						void *rkt_opaque,
 						void *msg_opaque));
 
+RD_EXPORT
+void
+rd_kafka_conf_set_assignor_cb (rd_kafka_conf_t* conf,
+    int32_t (*assignor) (
+        const rd_kafka_t* rk,
+        const char *member_id,
+        const char *protocol_name,
+        void *metadata,
+        void *members,
+        size_t member_cnt,
+        void ** eligible_topics,
+        size_t eligible_topic_cnt,
+        char* errstr,
+        size_t errstr_size,
+        void* opaque));
 
 /**
  * @brief \b Producer: Set message queueing order comparator callback.
@@ -2460,7 +2475,6 @@ rd_kafka_topic_conf_set_msg_order_cmp (rd_kafka_topic_conf_t *topic_conf,
                                        int (*msg_order_cmp) (
                                                const rd_kafka_message_t *a,
                                                const rd_kafka_message_t *b));
-
 
 /**
  * @brief Check if partition is available (has a leader broker).
